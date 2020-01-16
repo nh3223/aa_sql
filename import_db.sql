@@ -7,15 +7,15 @@ DROP TABLE questions
 DROP TABLE users
 
 CREATE TABLE users (
-    id          INTEGER PRIMARY KEY,
-    first_name  TEXT    NOT NULL,
-    last_name   TEXT    NOT NULL
+    id          INTEGER     PRIMARY KEY,
+    first_name  VARCHAR(50) NOT NULL,
+    last_name   VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE questions (
-    id      INTEGER PRIMARY KEY,
-    title   TEXT    NOT NULL,
-    body    TEXT    NOT NULL,
+    id      INTEGER         PRIMARY KEY,
+    title   VARCHAR(50)     NOT NULL,
+    body    TEXT            NOT NULL,
     user_id INTEGER,
 
     FOREIGN KEY user_id REFERENCES users(id)
@@ -34,7 +34,7 @@ CREATE TABLE replies (
     question_id     INTEGER NOT NULL,
     parent_reply_id INTEGER,
     user_id         INTEGER NOT NULL,
-    body            TEXT,
+    body            TEXT    NOT NULL,
 
     FOREIGN KEY question_id REFERENCES  questions(id),
     FOREIGN KEY parent_id   REFERENCES  replies(id),
