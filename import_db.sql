@@ -1,10 +1,10 @@
-PRAGMA foreign_keys = ON
+PRAGMA foreign_keys = ON;
 
-DROP TABLE question_likes
-DROP TABLE question_follows
-DROP TABLE replies
-DROP TABLE questions
-DROP TABLE users
+DROP TABLE question_likes;
+DROP TABLE question_follows;
+DROP TABLE replies;
+DROP TABLE questions;
+DROP TABLE users;
 
 CREATE TABLE users (
     id          INTEGER     PRIMARY KEY,
@@ -18,15 +18,15 @@ CREATE TABLE questions (
     body    TEXT            NOT NULL,
     user_id INTEGER,
 
-    FOREIGN KEY user_id REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE question_follows (
     user_id     INTEGER PRIMARY KEY,
     question_id INTEGER PRIMARY KEY,
 
-    FOREIGN KEY user_id     REFERENCES  users(id),
-    FOREIGN KEY question_id REFERENCES  questions(id)
+    FOREIGN KEY (user_id)     REFERENCES  users(id),
+    FOREIGN KEY (question_id) REFERENCES  questions(id)
 );
 
 CREATE TABLE replies (
@@ -36,9 +36,9 @@ CREATE TABLE replies (
     user_id         INTEGER NOT NULL,
     body            TEXT    NOT NULL,
 
-    FOREIGN KEY question_id REFERENCES  questions(id),
-    FOREIGN KEY parent_id   REFERENCES  replies(id),
-    FOREIGN KEY user_id     REFERENCES  users(id)
+    FOREIGN KEY (question_id) REFERENCES  questions(id),
+    FOREIGN KEY (parent_id)   REFERENCES  replies(id),
+    FOREIGN KEY (user_id)     REFERENCES  users(id)
 );
 
 CREATE TABLE question_likes (
@@ -46,7 +46,7 @@ CREATE TABLE question_likes (
     question_id INTEGER PRIMARY KEY,
     likes       BOOLEAN NOT NULL,
 
-    FOREIGN KEY user_id     REFERENCES  users(id),
-    FOREIGN KEY question_id REFERENCES  questions(id)
+    FOREIGN KEY (user_id)     REFERENCES  users(id),
+    FOREIGN KEY (question_id) REFERENCES  questions(id)
 );
 
