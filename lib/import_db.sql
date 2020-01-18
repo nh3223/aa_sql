@@ -36,14 +36,15 @@ CREATE TABLE replies (
     user_id         INTEGER NOT NULL,
     body            TEXT    NOT NULL,
 
-    FOREIGN KEY (question_id) REFERENCES  questions(id),
+    FOREIGN KEY (user_id)           REFERENCES  users(id),
+    FOREIGN KEY (question_id)       REFERENCES  questions(id),
     FOREIGN KEY (parent_reply_id)   REFERENCES  replies(id)
 );
 
 CREATE TABLE question_likes (
     user_id     INTEGER,
     question_id INTEGER,
-    likes       BOOLEAN NOT NULL,
+    likes       INTEGER,
 
     FOREIGN KEY (user_id)     REFERENCES  users(id),
     FOREIGN KEY (question_id) REFERENCES  questions(id)
