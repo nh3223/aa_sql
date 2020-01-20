@@ -52,7 +52,6 @@ class Reply
     end
 
     def author
-        return nil if self == nil
         User.find_by_id(user_id)
     end
 
