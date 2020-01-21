@@ -62,7 +62,8 @@ INSERT INTO
     questions(title, body, user_id)
 VALUES
     ('Les Miserables','Who am I?', (SELECT id FROM users WHERE last_name = 'Valjean')),
-    ('Chicken','Why did the chicken cross the road?', (SELECT id FROM users WHERE last_name = 'Doe'));
+    ('Chicken','Why did the chicken cross the road?', (SELECT id FROM users WHERE last_name = 'Doe')),
+    ('Jack and Jill', 'Why did they go up the hill?', (SELECT id FROM users WHERE last_name = 'Doe'));
 
 INSERT INTO
     question_follows(user_id,question_id)
@@ -83,5 +84,11 @@ VALUES
 INSERT INTO
     question_likes(user_id, question_id, likes)
 VALUES
-    (3,1,1),
-    (2,2,1);
+    (1,1,1),
+    (1,2,1),
+    (1,3,1),
+    (2,1,1),
+    (3,2,1),
+    (4,1,1),
+    (4,2,1),
+    (4,3,1);

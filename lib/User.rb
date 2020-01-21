@@ -52,13 +52,40 @@ class User
         Question_Like.liked_questions_for_user_id(id)
     end
 
-    def average_karma
+    def slow_average_karma
+        # After reviewing solution, this is slow due to potential for many database calls
+        # from the question.num_likes method
         return 0 if authored_questions == nil
         total_questions = authored_questions.length
         total_likes = authored_questions.reduce(0) { |sum, question| sum + question.num_likes }
         total_likes / total_questions
     end
 
+    def average_karma
+        total_questions = QuestionsDatabase.instance.execute(<<-SQL, id)
+            SELECT
+                COUNT(title)
+            FROM
+                questions
+            WHERE
+                user_id = ?
+        SQL
+        questions = total_questions.first['COUNT(title)']
+        return 0 if questions == 0
+        total_likes = QuestionsDatabase.instance.execute(<<-SQL, id)
+            SELECT
+                SUM(likes)
+            FROM
+                question_likes
+            JOIN
+                questions on questions.id = question_likes.question_id   
+            WHERE
+                questions.user_id = ?
+        SQL
+        likes = total_likes.first['SUM(likes)'].to_f
+        likes / questions
+    end
+    
     def save
         unless @id
             QuestionsDatabase.instance.execute(<<-SQL, first_name, last_name)
