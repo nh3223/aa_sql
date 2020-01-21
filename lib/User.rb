@@ -59,4 +59,25 @@ class User
         total_likes / total_questions
     end
 
+    def save
+        unless @id
+            QuestionsDatabase.instance.execute(<<-SQL, first_name, last_name)
+                INSERT INTO
+                    users(first_name, last_name)
+                VALUES
+                    (?, ?)
+            SQL
+            @id = QuestionsDatabase.instance.last_insert_row_id
+        else
+            QuestionsDatabase.instance.execute(<<-SQL, first_name, last_name, id)
+                UPDATE
+                    users
+                SET
+                    first_name = ?, last_name = ?
+                WHERE
+                    id = ?
+            SQL
+        end
+    end
+
 end
