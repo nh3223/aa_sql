@@ -30,6 +30,14 @@ class Question
         author.map { |question| Question.new(question) }
     end
 
+    def self.most_followed(n)
+        Question_Follow.most_followed_questions(n)
+    end
+
+    def self.most_liked(n)
+        Question_Like.most_liked_questions(n)
+    end
+
     def initialize(question_data)
         @id = question_data['id']
         @title = question_data['title']
@@ -49,4 +57,12 @@ class Question
         Question_Follow.followers_for_question_id(id)
     end
 
+    def likers
+        Question_Like.likers_for_question_id(id)
+    end
+
+    def num_likes
+        Question_Like.num_likes_for_question_id(id)
+    end
+    
 end

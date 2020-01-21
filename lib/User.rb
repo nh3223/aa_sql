@@ -47,4 +47,16 @@ class User
     def followed_questions
         Question_Follow.followed_questions_for_user_id(id)
     end
+
+    def liked_questions
+        Question_Like.liked_questions_for_user_id(id)
+    end
+
+    def average_karma
+        return 0 if authored_questions == nil
+        total_questions = authored_questions.length
+        total_likes = authored_questions.reduce(0) { |sum, question| sum + question.num_likes }
+        total_likes / total_questions
+    end
+
 end
